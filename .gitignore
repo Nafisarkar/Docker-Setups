@@ -1,0 +1,12 @@
+# 1. Ignore everything
+*
+
+# 2. Exception: Keep directories (so Git can look inside them)
+!*/
+
+# 3. Exception: Keep .yml and .yaml files
+!*.yml
+!*.yaml
+
+# 4. Exception: Keep the .gitignore file itself (so you don't lose these rules)
+!.gitignore
