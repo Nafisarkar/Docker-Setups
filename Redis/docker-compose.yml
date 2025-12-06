@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # The Database
+  redis:
+    image: redis:alpine
+    container_name: my-redis-db
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
+  # The GUI
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: redis-insight-gui
+    restart: always
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis_insight_data:/data
+    depends_on:
+      - redis
+
+volumes:
+  redis_insight_data:
