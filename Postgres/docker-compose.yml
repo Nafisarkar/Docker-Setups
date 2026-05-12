@@ -1,36 +1,15 @@
 services:
-  # Database Service
   postgres:
     container_name: postgres
-    image: postgres:17 # Pinned version for stability
+    image: postgres:18-alpine
     restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: localdb
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d localdb"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  # GUI Service
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80" # Maps localhost:5050 to container:80
-    depends_on:
-      postgres:
-        condition: service_healthy # Waits for DB to be ready before starting
-
 volumes:
   postgres_data:
